@@ -17,8 +17,7 @@ app.get('/talker', async (req, res) => {
   return res.status(OK).json(talkers);
 });
 
-
- // Para os Testes
+// Para os Testes
 const HTTP_OK_STATUS = 200;
 const PORT = process.env.PORT || '3001';
 
