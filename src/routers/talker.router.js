@@ -15,6 +15,7 @@ const router = express.Router();
 const OK = 200;
 const NOT_FOUND = 404;
 const CREATED = 201;
+const NO_CONTENT = 204;
 
 router.get('/talker', async (req, res) => {
   const talkers = await readTalkerData();
@@ -83,6 +84,17 @@ async (req, res) => {
   changeAllTalkerData(talkers);
 
   return res.status(OK).json(changeTalker);
+});
+
+router.delete('/talker/:id', authToken, async (req, res) => {
+  const { id } = req.params;
+  const talkers = await readTalkerData();
+
+  const deletedTalkerData = talkers.filter((talker) => talker.id !== Number(id));
+
+  changeAllTalkerData(deletedTalkerData);
+
+  return res.status(NO_CONTENT).send();
 });
 
 module.exports = router;
