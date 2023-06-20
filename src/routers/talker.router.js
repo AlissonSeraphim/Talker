@@ -1,6 +1,12 @@
 const express = require('express');
 const { readTalkerData, writeNewTalkerData } = require('../utils/fsUtils');
-const { validateWritingObject, authToken, validParams } = require('../middlewares/validateWriting');
+const { 
+  validateBodyObject, 
+  authToken, validName, 
+  validAge, 
+  validTalk,
+  validDate,
+  validRate } = require('../middlewares/validateWriting');
 
 const router = express.Router();
 
@@ -27,7 +33,16 @@ router.get('/talker/:id', async (req, res) => {
   return res.status(OK).json(idTalker);
 });
 
-router.post('/talker', validateWritingObject, authToken, validParams, async (req, res) => {
+router.post(
+  '/talker', 
+  validateBodyObject, 
+  authToken, 
+  validName, 
+  validAge, 
+  validTalk,
+  validDate,
+  validRate, 
+  async (req, res) => {
   const talker = req.body;
   const talkerData = await readTalkerData();
   const { id } = talkerData[talkerData.length - 1];
@@ -39,6 +54,7 @@ router.post('/talker', validateWritingObject, authToken, validParams, async (req
   await writeNewTalkerData(newTalker);
 
   return res.status(CREATED).json(newTalker);
-});
+},
+);
 
 module.exports = router;
