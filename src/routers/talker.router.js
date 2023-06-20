@@ -1,8 +1,9 @@
 const express = require('express');
-const { readTalkerData, writeNewTalkerData } = require('../utils/fsUtils');
+const { readTalkerData, writeNewTalkerData, changeAllTalkerData } = require('../utils/fsUtils');
 const { 
   validateBodyObject, 
-  authToken, validName, 
+  authToken, 
+  validName, 
   validAge, 
   validTalk,
   validDate,
@@ -56,5 +57,32 @@ router.post(
   return res.status(CREATED).json(newTalker);
 },
 );
+
+router.put('/talker/:id',
+validateBodyObject, 
+authToken, 
+validName, 
+validAge, 
+validTalk,
+validDate,
+validRate,  
+async (req, res) => {
+  const { id } = req.params;
+  const newTalker = req.body;
+  const talkers = await readTalkerData();
+
+  const idTalker = talkers.find((talker) => talker.id === Number(id));
+  if (!idTalker) {
+    return res.status(NOT_FOUND).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+  const changeTalker = { ...idTalker, ...newTalker };
+
+  const idTalkerIndex = talkers.findIndex((talker) => talker.id === Number(id));
+  talkers[idTalkerIndex] = changeTalker;
+
+  changeAllTalkerData(talkers);
+
+  return res.status(OK).json(changeTalker);
+});
 
 module.exports = router;

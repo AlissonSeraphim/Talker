@@ -28,7 +28,19 @@ async function writeNewTalkerData(newTalker) {
   }
 }
 
+async function changeAllTalkerData(talkerData) {
+  try {
+    const newTalkersData = JSON.stringify(talkerData, null, 2);
+
+    await fs.writeFile(path.resolve(__dirname, TALKER_DATA_PATH), newTalkersData);
+  } catch (err) {
+    console.error(`Erro na mudança do arquivo JSON: ${err.message}`);
+    return null;
+  }
+}
+
 module.exports = {
   readTalkerData,
   writeNewTalkerData,
+  changeAllTalkerData,
 };
