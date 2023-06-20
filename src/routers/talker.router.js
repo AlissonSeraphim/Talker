@@ -1,11 +1,13 @@
 const express = require('express');
-const { readTalkerData } = require('../utils/fsUtils');
+const { readTalkerData, writeNewTalkerData } = require('../utils/fsUtils');
+const { validateWritingObject, authToken, validParams } = require('../middlewares/validateWriting');
 
 const router = express.Router();
 
 // Const Status
 const OK = 200;
 const NOT_FOUND = 404;
+const CREATED = 201;
 
 router.get('/talker', async (req, res) => {
   const talkers = await readTalkerData();
@@ -23,6 +25,20 @@ router.get('/talker/:id', async (req, res) => {
   }
 
   return res.status(OK).json(idTalker);
+});
+
+router.post('/talker', validateWritingObject, authToken, validParams, async (req, res) => {
+  const talker = req.body;
+  const talkerData = await readTalkerData();
+  const { id } = talkerData[talkerData.length - 1];
+
+  const newId = talkerData.length > 0 ? id + 1 : 1;
+
+  const newTalker = { name: talker.name, id: newId, ...talker };
+
+  await writeNewTalkerData(newTalker);
+
+  return res.status(CREATED).json(newTalker);
 });
 
 module.exports = router;
