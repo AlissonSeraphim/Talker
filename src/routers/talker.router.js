@@ -8,6 +8,7 @@ const {
   validTalk,
   validDate,
   validRate } = require('../middlewares/validateWriting');
+const { validateSearch } = require('../middlewares/validateSearch');
 
 const router = express.Router();
 
@@ -16,30 +17,49 @@ const OK = 200;
 const NOT_FOUND = 404;
 const CREATED = 201;
 const NO_CONTENT = 204;
+// const BAD_REQUEST = 400;
 
 router.get('/talker', async (req, res) => {
   const talkers = await readTalkerData();
   return res.status(OK).json(talkers);
 });
 
-router.get('/talker/search', authToken, async (req, res) => {
-  const talkersData = await readTalkerData();
-  const { q } = req.query;
+router.get('/talker/search', authToken, validateSearch, async (req, res) => {
+  let talkersData = await readTalkerData();
+  const { q, rate } = req.query;
 
-  if (!q) {
-    return res.status(OK).send(talkersData);
+  if (q && q.length < 1) return res.status(OK).send(talkersData);
+
+  if (q) {
+    talkersData = talkersData.filter((talker) => (
+      talker.name.toLowerCase().includes(q.toLowerCase())
+    ));
   }
-  
-  const filteredTalkers = talkersData.filter((talker) =>
-    talker.name.toLowerCase().includes(q.toLowerCase())
-  );
 
-  return res.status(OK).send(filteredTalkers);
+  if (rate) {
+    talkersData = talkersData.filter((talker) => talker.talk.rate === Number(rate));
+  }
+
+  return res.status(OK).send(talkersData);
 });
+
+// router.get('/talker/search', authToken, async (req, res) => {
+//   const talkersData = await readTalkerData();
+//   const { date } = req.query;
+
+//   if (!date) {
+//     return res.status(OK).send(talkersData);
+//   }
+  
+//   const filteredByDate = talkersData.filter((talker) =>
+//     talker.talk.watchedAt === date
+//   );
+
+//   return res.status(OK).send(filteredByDate);
+// });
 
 router.get('/talker/:id', async (req, res) => {
   const { id } = req.params;
-  console.log('qualquer coisa teste', id);
   const talkers = await readTalkerData();
 
   const idTalker = talkers.find((talker) => talker.id === Number(id));
