@@ -1,4 +1,4 @@
-# Talker Manager API - Node.js, Express, Docker
+# [PT-BR] Talker Manager API - Node.js, Express, Docker
 
 ## Descrição do Projeto
 
@@ -56,6 +56,68 @@ Para utilizar o Talker Manager, siga as instruções abaixo:
   - Observação: Os testes automatizados foram fornecidos pela Trybe para avaliação do projeto.
 
 ## Contato
+
+- [LinkedIn](https://www.linkedin.com/in/alissontassi/)
+- [GitHub](https://github.com/AlissonSeraphim)
+
+# [EN] Talker Manager API - Node.js, Express, Docker
+
+## Project Description
+
+Talker Manager is an application developed as part of my full-stack web development learning. It is an individual project that aims to build an API for a talker registration system. The application allows for creating, reading, updating, and deleting information about the talkers, following the CRUD (Create, Read, Update, Delete) concept.
+
+The project was developed using technologies such as Node.js, Express, and JavaScript, which are widely used in backend applications. Docker was adopted to facilitate dependency management and ensure portability and consistency of the development environment.
+
+## Key Features
+
+- Register new talkers.
+- View information about registered talkers.
+- Search for talkers based on specific criteria.
+- Edit information of existing talkers.
+- Delete talkers from the system.
+
+## Technologies Used
+
+- Node.js: JavaScript backend development platform.
+- Express: Web framework for Node.js, making API creation easier.
+- Docker: Containerization platform that allows packaging the application with its dependencies.
+- Git and GitHub: Version control and team collaboration tools.
+
+## Skills Acquired
+
+During the development of Talker Manager, I acquired important skills for the programming market, including:
+
+- Development of APIs using Node.js and Express.
+- File manipulation using the `fs` module of Node.js.
+- Use of Docker to manage dependencies and ensure the consistency of the development environment.
+- Familiarity with Docker commands to start containers, execute commands in the container terminal, and perform tests.
+- Practice of using good development practices, such as code organization, use of linter to maintain code quality, and execution of automated tests.
+
+## How to Use
+
+To use Talker Manager, follow the instructions below:
+
+1. Clone the repository and navigate to the project directory:
+   ```bash
+   git clone https://github.com/yourusername/talker-manager.git
+   cd talker-manager 
+
+2. Start the containers using Docker:
+` docker-compose up -d `
+
+  - Make sure you have Docker installed on your machine.
+
+3. Access the application in your browser:
+` http://localhost:3001 `
+
+  - The application will be running on port 3001.
+  - The database will be running on port 3006.
+
+4. Perform the operations of registration, viewing, searching, editing, and deletion of talkers using the application interface.
+
+  - Note: The automated tests were provided by Trybe for project evaluation.
+
+## Contact
 
 - [LinkedIn](https://www.linkedin.com/in/alissontassi/)
 - [GitHub](https://github.com/AlissonSeraphim)
