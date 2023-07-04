@@ -19,7 +19,7 @@ const CREATED = 201;
 const NO_CONTENT = 204;
 // const BAD_REQUEST = 400;
 
-router.get('/talker', async (req, res) => {
+router.get('/talker', async (_req, res) => {
   const talkers = await readTalkerData();
   return res.status(OK).json(talkers);
 });
@@ -42,21 +42,6 @@ router.get('/talker/search', authToken, validateSearch, async (req, res) => {
 
   return res.status(OK).send(talkersData);
 });
-
-// router.get('/talker/search', authToken, async (req, res) => {
-//   const talkersData = await readTalkerData();
-//   const { date } = req.query;
-
-//   if (!date) {
-//     return res.status(OK).send(talkersData);
-//   }
-  
-//   const filteredByDate = talkersData.filter((talker) =>
-//     talker.talk.watchedAt === date
-//   );
-
-//   return res.status(OK).send(filteredByDate);
-// });
 
 router.get('/talker/:id', async (req, res) => {
   const { id } = req.params;
